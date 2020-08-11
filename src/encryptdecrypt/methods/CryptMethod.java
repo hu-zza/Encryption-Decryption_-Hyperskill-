@@ -1,27 +1,18 @@
 package encryptdecrypt.methods;
 
+import java.util.HashMap;
+
 public abstract class CryptMethod {
     final StringBuilder convertedText = new StringBuilder();
-    final String mode;
-    final int key;
+    final HashMap<String, String> args;
 
-    public CryptMethod(String mode, int key) {
-        this.mode = mode;
-        this.key = key;
-    }
-
-    public String convertText(String inputText) {
-        convertedText.delete(0, convertedText.length());
-
-        if ("ENC".equalsIgnoreCase(mode)) {
-            encryptText(inputText);
-        } else {
-            decryptText(inputText);
+    public CryptMethod(String... args) {
+        this.args = new HashMap<>();
+        for (int x = 0; x < args.length / 2; x++) {
+            this.args.put(args[2 * x], args[2 * x + 1]);
         }
-
-        return convertedText.toString();
     }
 
-    abstract void encryptText(String inputText);
-    abstract void decryptText(String inputText);
+    public abstract String encryptText(String inputText);
+    public abstract String decryptText(String inputText);
 }

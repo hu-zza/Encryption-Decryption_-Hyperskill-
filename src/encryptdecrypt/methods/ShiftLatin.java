@@ -3,12 +3,16 @@ package encryptdecrypt.methods;
 public class ShiftLatin extends CryptMethod {
     int charInInt;
 
-    public ShiftLatin(String mode, int key) {
-        super(mode, key);
+    public ShiftLatin(String... args) {
+        super(args);
     }
 
     @Override
-    void encryptText(String inputText) {
+    public String encryptText(String inputText) {
+
+        convertedText.setLength(0);
+        int key = Integer.parseInt(args.getOrDefault("key", "0"));
+
         for (char ch : inputText.toCharArray()) {
             charInInt = ch;
             switch (analyzeChar(ch)) {
@@ -28,10 +32,16 @@ public class ShiftLatin extends CryptMethod {
             }
             convertedText.append((char) charInInt);
         }
+
+        return convertedText.toString();
     }
 
     @Override
-    void decryptText(String inputText) {
+    public String decryptText(String inputText) {
+
+        convertedText.setLength(0);
+        int key = Integer.parseInt(args.getOrDefault("key", "0"));
+
         for (char ch : inputText.toCharArray()) {
             charInInt = ch;
             switch (analyzeChar(ch)) {
@@ -52,6 +62,7 @@ public class ShiftLatin extends CryptMethod {
             convertedText.append((char) charInInt);
         }
 
+        return convertedText.toString();
     }
 
     private CharType analyzeChar(char ch) {
