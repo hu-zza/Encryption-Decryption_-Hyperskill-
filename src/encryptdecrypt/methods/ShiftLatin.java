@@ -1,17 +1,13 @@
 package encryptdecrypt.methods;
 
-public class ShiftLatin extends CryptMethod {
+class ShiftLatin extends CryptMethod {
     int charInInt;
-
-    public ShiftLatin(String... args) {
-        super(args);
-    }
 
     @Override
     public String encryptText(String inputText) {
 
         convertedText.setLength(0);
-        int key = Integer.parseInt(args.getOrDefault("key", "0"));
+        int key = Integer.parseInt(argsMap.getOrDefault("key", "0"));
 
         for (char ch : inputText.toCharArray()) {
             charInInt = ch;
@@ -40,7 +36,7 @@ public class ShiftLatin extends CryptMethod {
     public String decryptText(String inputText) {
 
         convertedText.setLength(0);
-        int key = Integer.parseInt(args.getOrDefault("key", "0"));
+        int key = Integer.parseInt(argsMap.getOrDefault("key", "0"));
 
         for (char ch : inputText.toCharArray()) {
             charInInt = ch;

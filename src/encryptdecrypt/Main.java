@@ -1,7 +1,6 @@
 package encryptdecrypt;
 
 import encryptdecrypt.methods.CryptMethod;
-import encryptdecrypt.methods.CryptMethodFactory;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -59,7 +58,7 @@ public class Main {
                     inputText.add(line);
                 }
             } catch (IOException e) {
-                System.out.printf("%nError:%n%s%n%n", e.getMessage());
+                System.out.printf("%nError while importing:%n%s%n%n", e.getMessage());
             }
         } else if (!data.isEmpty()) {
             inputText.add(data);
@@ -76,16 +75,19 @@ public class Main {
                 args.add(entry.getValue());
             }
         }
-
-        method = CryptMethodFactory.create(alg, args.toArray(new String[0]));
+        method = CryptMethod.getInstance(alg, args.toArray(new String[0]));
     }
 
     private static void convert() {
-        for (String s : inputText) {
-            if ("ENC".equalsIgnoreCase(mode)) {
-                outputText.add(method.encryptText(s));
-            } else {
-                outputText.add(method.decryptText(s));
+        if (method == null) {
+            System.out.println("Set a method before the conversion.");
+        } else {
+            for (String s : inputText) {
+                if ("ENC".equalsIgnoreCase(mode)) {
+                    outputText.add(method.encryptText(s));
+                } else {
+                    outputText.add(method.decryptText(s));
+                }
             }
         }
     }
@@ -99,7 +101,7 @@ public class Main {
                     bw.write(s);
                 }
             } catch (IOException e) {
-                System.out.printf("%nError:%n%s%n%n", e.getMessage());
+                System.out.printf("%nError while exporting:%n%s%n%n", e.getMessage());
             }
         } else {
             for (String s : outputText) {
