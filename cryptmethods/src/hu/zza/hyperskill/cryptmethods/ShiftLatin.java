@@ -1,11 +1,24 @@
-package encryptdecrypt.methods;
+package hu.zza.hyperskill.cryptmethods;
 
-class ShiftLatin extends CryptMethod {
+import hu.zza.hyperskill.cryptservice.CryptService;
 
-  private final int key = Integer.parseInt(argsMap.getOrDefault("key", "0"));
+public class ShiftLatin extends CryptMethod implements CryptService {
+
+  private int key = 0;
   private boolean encryption;
   private int charInInt;
   private CharType charType;
+
+  @Override
+  public String getName() {
+    return "SHIFT";
+  }
+
+  @Override
+  public void setArguments(String... arguments) {
+    super.setArguments(arguments);
+    key = Integer.parseInt(argsMap.getOrDefault("-key", "0"));
+  }
 
   @Override
   public String encryptText(String inputText) {
@@ -35,20 +48,6 @@ class ShiftLatin extends CryptMethod {
     return convertedText.toString();
   }
 
-  private void convertChar() {
-    boolean isUpper = charType == CharType.UPPER;
-    char[] thresholds = {'Z', 'z', 'A', 'a'};
-    char threshold = thresholds[
-        (encryption ? 0 : 2) + (isUpper ? 0 : 1)
-        ];
-
-    charInInt += encryption ? key : -key;
-
-    while (encryption ? threshold < charInInt : threshold > charInInt) {
-      charInInt += encryption ? -26 : 26;
-    }
-  }
-
   private CharType analyzeChar(char ch) {
     if ('A' <= ch && ch <= 'Z') {
       return CharType.UPPER;
@@ -57,6 +56,18 @@ class ShiftLatin extends CryptMethod {
       return CharType.LOWER;
     }
     return CharType.NO_CONV;
+  }
+
+  private void convertChar() {
+    boolean isUpper = charType == CharType.UPPER;
+    char[] thresholds = {'Z', 'z', 'A', 'a'};
+    char threshold = thresholds[(encryption ? 0 : 2) + (isUpper ? 0 : 1)];
+
+    charInInt += encryption ? key : -key;
+
+    while (encryption ? threshold < charInInt : threshold > charInInt) {
+      charInInt += encryption ? -26 : 26;
+    }
   }
 
   private enum CharType {

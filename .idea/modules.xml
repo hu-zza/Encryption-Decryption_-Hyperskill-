@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Encryption-Decryption_-Hyperskill-.iml" filepath="$PROJECT_DIR$/.idea/Encryption-Decryption_-Hyperskill-.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Encryption-Decryption_-Hyperskill-.iml" filepath="$PROJECT_DIR$/Encryption-Decryption_-Hyperskill-.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptmethods/cryptmethods.iml" filepath="$PROJECT_DIR$/cryptmethods/cryptmethods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptservice/cryptservice.iml" filepath="$PROJECT_DIR$/cryptservice/cryptservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/encryptdecrypt/encryptdecrypt.iml" filepath="$PROJECT_DIR$/encryptdecrypt/encryptdecrypt.iml" />
     </modules>
   </component>
 </project>
