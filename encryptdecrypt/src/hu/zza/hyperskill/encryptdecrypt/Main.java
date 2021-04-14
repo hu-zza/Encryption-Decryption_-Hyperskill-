@@ -18,7 +18,6 @@ public class Main {
   private static final Map<String, String> settings = new HashMap<>(defaults);
   private static final ArrayList<String> inputText = new ArrayList<>();
   private static final ArrayList<String> outputText = new ArrayList<>();
-  private static final ServiceLoader<CryptService> loader = ServiceLoader.load(CryptService.class);
   private static String[] arguments;
   private static Optional<CryptService> cryptService = Optional.empty();
   private static Function<String, String> cryptMethod = String::toString;
@@ -27,11 +26,15 @@ public class Main {
     arguments = args;
     initializeArguments();
     prepareInputText();
-    selectService();
-    configService();
-    selectMethod();
-    convert();
-    exportOutputText();
+    try {
+      selectService();
+      configService();
+      selectMethod();
+      convert();
+      exportOutputText();
+    } catch (NoClassDefFoundError e) {
+    System.err.println("Can not load any CryptService.");
+  }
   }
 
   private static void initializeArguments() {
@@ -54,7 +57,8 @@ public class Main {
   }
 
   private static void selectService() {
-    loader.forEach(Main::setCryptServiceOptionally);
+      ServiceLoader<CryptService> loader = ServiceLoader.load(CryptService.class);
+      loader.forEach(Main::setCryptServiceOptionally);
   }
 
   private static void setCryptServiceOptionally(CryptService service) {
